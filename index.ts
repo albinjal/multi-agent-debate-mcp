@@ -2,7 +2,7 @@
 
 /*  Multi‑Agent Debate Server
  *  -------------------------
- *  Lets multiple “personas” argue, rebut, and judge a claim in
+ *  Lets multiple "personas" argue, rebut, and judge a claim in
  *  structured rounds.  See the TOOL description below for usage.
  */
 
@@ -140,8 +140,8 @@ class MultiAgentDebateServer {
         /* if judge, record verdict */
         if (d.action === "judge") {
           this.verdict = {
-            for: d.content.split("\n")[0].trim(), // first line: winner / inconclusive
-            rationale: d.content,
+            for: d.content!.split("\n")[0].trim(), // first line: winner / inconclusive
+            rationale: d.content!,
             round: d.round,
           };
         }
