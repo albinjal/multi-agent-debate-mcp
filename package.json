@@ -1,0 +1,55 @@
+{
+  "name": "multi-agent-debate-mcp",
+  "version": "0.1.0",
+  "description": "A Model Context Protocol server for structured multi-agent debates",
+  "main": "dist/index.js",
+  "type": "module",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx index.ts",
+    "clean": "rm -rf dist",
+    "lint": "eslint . --ext .ts",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "multi-agent",
+    "debate",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albinjal/multi-agent-debate-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/albinjal/multi-agent-debate-mcp/issues"
+  },
+  "homepage": "https://github.com/albinjal/multi-agent-debate-mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "chalk": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "bin": {
+    "multi-agent-debate-mcp": "./dist/index.js"
+  }
+}
