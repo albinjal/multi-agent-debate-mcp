@@ -1,0 +1,94 @@
+name: Auto Release
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - '.github/**'
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+      tag-exists: ${{ steps.check-tag.outputs.exists }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from package.json
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=v$VERSION" >> $GITHUB_OUTPUT
+          echo "Current version: v$VERSION"
+
+      - name: Check if tag exists
+        id: check-tag
+        run: |
+          if git rev-parse "refs/tags/${{ steps.get-version.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Tag ${{ steps.get-version.outputs.version }} already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Tag ${{ steps.get-version.outputs.version }} does not exist"
+          fi
+
+  create-release:
+    needs: check-version
+    runs-on: ubuntu-latest
+    if: needs.check-version.outputs.tag-exists == 'false'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build package
+        run: npm run build
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$LAST_TAG" ]; then
+            COMMITS=$(git log --pretty=format:"- %s (%h)" --no-merges)
+          else
+            COMMITS=$(git log $LAST_TAG..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          fi
+
+          # Create changelog
+          echo "## What's Changed" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          if [ -n "$COMMITS" ]; then
+            echo "$COMMITS" >> CHANGELOG.md
+          else
+            echo "- No changes" >> CHANGELOG.md
+          fi
+
+          # Set output for release body
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          cat CHANGELOG.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.check-version.outputs.version }}
+          release_name: Release ${{ needs.check-version.outputs.version }}
+          body: ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false

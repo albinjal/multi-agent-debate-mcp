@@ -70,7 +70,7 @@ Add this to your `claude_desktop_config.json`:
 }
 ```
 
-#### docker
+#### Docker
 
 ```json
 {
@@ -81,7 +81,7 @@ Add this to your `claude_desktop_config.json`:
         "run",
         "--rm",
         "-i",
-        "multi-agent-debate-mcp"
+        "ghcr.io/albinjal/multi-agent-debate-mcp:latest"
       ]
     }
   }
@@ -143,7 +143,7 @@ For Docker installation:
           "run",
           "--rm",
           "-i",
-          "multi-agent-debate-mcp"
+          "ghcr.io/albinjal/multi-agent-debate-mcp:latest"
         ]
       }
     }
@@ -164,7 +164,14 @@ npm start
 Docker:
 
 ```bash
+# Build locally
 docker build -t multi-agent-debate-mcp .
+
+# Or pull from GitHub Container Registry
+docker pull ghcr.io/albinjal/multi-agent-debate-mcp:latest
+
+# Run the container
+docker run --rm -i ghcr.io/albinjal/multi-agent-debate-mcp:latest
 ```
 
 ## License
