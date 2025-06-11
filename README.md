@@ -11,7 +11,7 @@ An MCP server implementation that enables structured multi-agent debates between
 - Automatic verdict tracking with rationale
 - Round-based system with configurable progression
 
-## Tool
+## Tools
 
 ### multiagentdebate
 
@@ -36,23 +36,6 @@ The Multi-Agent Debate tool is designed for:
 - Collaborative problem-solving through adversarial discussion
 
 ## Configuration
-
-### Usage with Claude Desktop
-
-Add this to your `claude_desktop_config.json`:
-
-#### Local Development
-
-```json
-{
-  "mcpServers": {
-    "multi-agent-debate": {
-      "command": "node",
-      "args": ["path/to/multi-agent-debate-mcp/dist/index.js"]
-    }
-  }
-}
-```
 
 #### npx
 
@@ -88,92 +71,9 @@ Add this to your `claude_desktop_config.json`:
 }
 ```
 
-### Usage with VS Code
+## Demo
 
-For manual installation, add the following JSON block to your User Settings (JSON) file in VS Code. You can do this by pressing `Ctrl + Shift + P` and typing `Preferences: Open Settings (JSON)`.
-
-Optionally, you can add it to a file called `.vscode/mcp.json` in your workspace. This will allow you to share the configuration with others.
-
-> Note that the `mcp` key is not needed in the `.vscode/mcp.json` file.
-
-For local development:
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "multi-agent-debate": {
-        "command": "node",
-        "args": [
-          "path/to/multi-agent-debate-mcp/dist/index.js"
-        ]
-      }
-    }
-  }
-}
-```
-
-For npx installation:
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "multi-agent-debate": {
-        "command": "npx",
-        "args": [
-          "-y",
-          "multi-agent-debate-mcp"
-        ]
-      }
-    }
-  }
-}
-```
-
-For Docker installation:
-
-```json
-{
-  "mcp": {
-    "servers": {
-      "multi-agent-debate": {
-        "command": "docker",
-        "args": [
-          "run",
-          "--rm",
-          "-i",
-          "ghcr.io/albinjal/multi-agent-debate-mcp:latest"
-        ]
-      }
-    }
-  }
-}
-```
-
-## Building
-
-Local development:
-
-```bash
-npm install
-npm run build
-npm start
-```
-
-Docker:
-
-```bash
-# Build locally
-docker build -t multi-agent-debate-mcp .
-
-# Or pull from GitHub Container Registry
-docker pull ghcr.io/albinjal/multi-agent-debate-mcp:latest
-
-# Run the container
-docker run --rm -i ghcr.io/albinjal/multi-agent-debate-mcp:latest
-```
-
-## License
-
-This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository.
+![demo0](assets/demo0.png)
+![demo1](assets/demo1.png)
+![demo2](assets/demo2.png)
+![demo3](assets/demo3.png)
