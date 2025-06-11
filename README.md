@@ -1,5 +1,7 @@
 # Multi-Agent Debate MCP Server
 
+[![smithery badge](https://smithery.ai/badge/@albinjal/multi-agent-debate-mcp)](https://smithery.ai/server/@albinjal/multi-agent-debate-mcp)
+
 An MCP server implementation that enables structured multi-agent debates between different personas. This server allows multiple AI agents to engage in formal debates with arguments, rebuttals, and judgments across multiple rounds.
 
 ## Features
